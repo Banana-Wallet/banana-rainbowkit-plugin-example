@@ -68,6 +68,8 @@ const Demo = () => {
         resetConsole()
         //@ts-ignore
         const account = await signer.getAddress()
+
+        console.log(" This is account ", account);
         const balanceChk1 = await provider!.getBalance(account)
         console.log('balance check 1', balanceChk1.toString())
         addNewConsoleLine(`balance check 1: ${balanceChk1.toString()}`)
