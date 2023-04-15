@@ -21,10 +21,7 @@ import { polygonMumbai, optimismGoerli, goerli } from "@wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-
-// import { BananaWallet } from 
-import { BananaWallet } from '@rize-labs/banana-rainbowkit-plugin/dist'
-// import { BananaWallet } from "@rize-labs/banana-rainbowkit-plugin/src/banana-wallet";
+import { BananaWallet } from '@rize-labs/banana-rainbowkit-plugin'
 
 function App() {
   const { chains, provider } = configureChains(
