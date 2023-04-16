@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import { useSigner, useProvider, useAccount } from 'wagmi'
 import { useState, useEffect } from "react";
 import { ERC_20_ABI } from './constants/abi'
+import './App.css'
 
 const Demo = () => {
 
@@ -13,6 +14,7 @@ const Demo = () => {
   
     const [consoleMsg, setConsoleMsg] = useState<null|string>(null)
     const [consoleLoading, setConsoleLoading] = useState<boolean>(false)
+    const [output, setOutput] = useState('');
   
     const appendConsoleLine = (message: string) => {
       return (setConsoleMsg((prevState => {
@@ -57,6 +59,7 @@ const Demo = () => {
         console.log('signer.getChainId()', chainId)
         addNewConsoleLine(`signer.getChainId(): ${chainId}`)
         setConsoleLoading(false)
+        setOutput(JSON.stringify(chainId.toString()));
       } catch(e) {
         console.error(e)
         consoleErrorMesssage()
@@ -73,6 +76,8 @@ const Demo = () => {
         const balanceChk1 = await provider!.getBalance(account)
         console.log('balance check 1', balanceChk1.toString())
         addNewConsoleLine(`balance check 1: ${balanceChk1.toString()}`)
+
+        setOutput(JSON.stringify(balanceChk1))
 
         //@ts-ignore
         const balanceChk2 = await signer.getBalance()
@@ -91,7 +96,7 @@ const Demo = () => {
         resetConsole()
         const network = await provider!.getNetwork() 
         console.log('networks:', network)
-    
+        setOutput(JSON.stringify(network));
         addNewConsoleLine(`networks: ${JSON.stringify(network)}`)
         setConsoleLoading(false) 
       } catch(e) {
@@ -135,6 +140,7 @@ const Demo = () => {
         //@ts-ignore
         const sig = await signer.signBananaMessage(message)
         console.log('signature:', sig)
+        setOutput(JSON.stringify(sig));
     
         addNewConsoleLine(`signature: ${sig}`)
     
@@ -172,7 +178,8 @@ const Demo = () => {
         appendConsoleLine(`balance of ${toAddress}, before: ${balance1}`)
         //@ts-ignore
         const txnResp = await signer.sendTransaction(tx1)
-        await txnResp.wait()
+        // await txnResp.wait()
+        setOutput(JSON.stringify(txnResp));
     
         const balance2 = await provider!.getBalance(toAddress)
         console.log(`balance of ${toAddress}, after:`, balance2)
@@ -224,129 +231,36 @@ const Demo = () => {
             {/* <Box marginBottom="4">
               <Text>Please open your browser dev inspector to view output of functions below</Text>
             </Box> */}
-              <button onClick={() => getChainID()}>
+              <button className="action-btn" onClick={() => getChainID()}>
                 ChainID
               </button>
-              <button onClick={() => getNetworks()}>
+              <button className="action-btn" onClick={() => getNetworks()}>
                 Networks
               </button>
-              <button  onClick={() => getBalance()}>
+              <button className="action-btn" onClick={() => getBalance()}>
                 Get Balance
               </button>
     
-              <button onClick={() => signMessage()}>
+              <button className="action-btn" onClick={() => signMessage()}>
                 Sign Message
               </button>
     
-              <button  onClick={() => sendETH()}>
+              <button className="action-btn" onClick={() => sendETH()}>
                 Send ETH
-              </button>
-              <button onClick={() => sendDAI()}>
-                Send DAI Tokens
               </button>
             </>
         )
       }
 
   return (
-    <div>
-      <h1> demo dapp </h1>
-
-      <ConnectButton.Custom>
-        {({
-          account,
-          chain,
-          openAccountModal,
-          openChainModal,
-          openConnectModal,
-          authenticationStatus,
-          mounted,
-        }) => {
-          // Note: If your app doesn't use authentication, you
-          // can remove all 'authenticationStatus' checks
-          const ready = mounted && authenticationStatus !== "loading";
-          const connected =
-            ready &&
-            account &&
-            chain &&
-            (!authenticationStatus || authenticationStatus === "authenticated");
-
-          return (
-            <div
-              {...(!ready && {
-                "aria-hidden": true,
-                style: {
-                  opacity: 0,
-                  pointerEvents: "none",
-                  userSelect: "none",
-                },
-              })}
-            >
-              {(() => {
-                if (!connected) {
-                  return (
-                    <button
-                      style={{ marginBottom: "20px" }}
-                      onClick={openConnectModal}
-                      type="button"
-                    >
-                      Connect Wallet
-                    </button>
-                  );
-                }
-
-                if (chain.unsupported) {
-                  return (
-                    <button onClick={openChainModal} type="button">
-                      Wrong network
-                    </button>
-                  );
-                }
-
-                return (
-                  <div style={{ display: "flex", gap: 12 }}>
-                    <button
-                      onClick={openChainModal}
-                      style={{ display: "flex", alignItems: "center" }}
-                      type="button"
-                    >
-                      {chain.hasIcon && (
-                        <div
-                          style={{
-                            background: chain.iconBackground,
-                            width: 12,
-                            height: 12,
-                            borderRadius: 999,
-                            overflow: "hidden",
-                            marginRight: 4,
-                          }}
-                        >
-                          {chain.iconUrl && (
-                            <img
-                              alt={chain.name ?? "Chain icon"}
-                              src={chain.iconUrl}
-                              style={{ width: 12, height: 12 }}
-                            />
-                          )}
-                        </div>
-                      )}
-                      {chain.name}
-                    </button>
-
-                    <button onClick={openAccountModal} type="button">
-                      {account.displayName}
-                      {account.displayBalance
-                        ? ` (${account.displayBalance})`
-                        : ""}
-                    </button>
-                  </div>
-                );
-              })()}
-            </div>
-          );
-        }}
-      </ConnectButton.Custom>
+    <div className="connect-div">
+      <h1> Banana Rainbow Kit Plugin Example </h1>
+      <ConnectButton />
       {getWalletActions()}
+      <h1> Output </h1>
+      <div className="output-div">
+        <p>{output}</p>
+      </div>
     </div>
   );
 };

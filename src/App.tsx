@@ -1,5 +1,3 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 import "@rainbow-me/rainbowkit/styles.css";
@@ -25,6 +23,7 @@ import { BananaWallet } from '@rize-labs/banana-rainbowkit-plugin'
 
 function App() {
   const { chains, provider } = configureChains(
+    // currently on these three chains are supported by BananaWallet
     [polygonMumbai, optimismGoerli, goerli],
     [publicProvider()]
   );

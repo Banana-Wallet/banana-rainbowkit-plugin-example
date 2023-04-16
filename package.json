@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@rainbow-me/rainbowkit": "^0.8.1",
-    "@rize-labs/banana-rainbowkit-plugin": "^1.0.5",
-    "@rize-labs/banana-wallet-sdk": "^0.1.14",
+    "@rize-labs/banana-rainbowkit-plugin": "^1.0.6",
+    "@rize-labs/banana-wallet-sdk": "^0.1.16",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
