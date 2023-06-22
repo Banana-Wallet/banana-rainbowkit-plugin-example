@@ -16,20 +16,16 @@ import {
 } from "@rainbow-me/rainbowkit/wallets";
 
 import { polygonMumbai, optimismGoerli, goerli, gnosis, gnosisChiado } from "@wagmi/chains";
-import { publicProvider } from "wagmi/providers/public";
-import { Chain } from "@wagmi/chains";
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-// import { BananaWallet } from '@rize-labs/banana-rainbowkit-plugin'
-import { BananaWallet } from '@rize-labs/banana-rainbowkit-plugin'
-import { shibuyaChain } from "@rize-labs/banana-wallet-sdk";
+import { BananaWallet, shibuyaChain, astarChain } from '@rize-labs/banana-rainbowkit-plugin'
 
 function App() {
 
   const { chains, provider } = configureChains(
     // currently on these three chains are supported by BananaWallet
-    [polygonMumbai, optimismGoerli, goerli, gnosis, gnosisChiado, shibuyaChain],
+    [polygonMumbai, optimismGoerli, goerli, gnosis, gnosisChiado, shibuyaChain, astarChain],
     // [publicProvider()]
     [
       jsonRpcProvider({
@@ -43,7 +39,7 @@ function App() {
       groupName: "Recommended",
       wallets: [
         // default chain would be gnosisChiado for now
-        BananaWallet({ chains, connect: { networkId: 81 } }),
+        BananaWallet({ chains, connect: { networkId: 80001 } }),
         metaMaskWallet({ chains, shimDisconnect: true }),
         rainbowWallet({ chains }),
         walletConnectWallet({ chains }),
