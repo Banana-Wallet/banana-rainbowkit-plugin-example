@@ -11,8 +11,7 @@ const Demo = () => {
   const provider = useProvider();
   const { data: signer } = useSigner();
 
-  // gnosisChiado address
-  const SampleContractAddress = "0xCB8a3Ca479aa171aE895A5D2215A9115D261A566";
+  const SampleContractAddress = "0x59DC70db4A6914Bece003Eff48C8fa4166aaC05a";
 
   const [output, setOutput] = useState("");
   const [loading, setIsLoading] = useState(false);
