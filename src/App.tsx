@@ -38,7 +38,7 @@ function App() {
     {
       groupName: "Recommended",
       wallets: [
-        // default chain would be gnosisChiado for now
+        // default chain would be astar for now
         BananaWallet({ chains, connect: { networkId: 592 } }),
         metaMaskWallet({ chains, shimDisconnect: true }),
         rainbowWallet({ chains }),
